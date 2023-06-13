@@ -11,19 +11,19 @@
     <h1>ANIMAL DEMOS</h1>
     <label for="exhibit-select">Sort by exhibit: </label>
 
-    <select name="exhibits" id="exhibit-select">
+    <select name="exhibits" id="exhibit-select" onchange="run()">
         <option value="all">All Exhibits</option>
         <option value="small-mammal">Small Mammal House</option>
         <option value="asia-trail">Asia Trail</option>
         <option value="american-trail">American Trail</option>
         <option value="elephant-trails">Elephant Trails</option>
         <option value="reptile-discovery">Reptile Discovery Center</option>
-        <option value="paws-claws">Paws & Claws Pathway</option>
+        <option value="claws-paws">Claws & Paws Pathway</option>
         <option value="great-cats">Great Cats</option>
         <option value="kids-farm">Kids' Farm</option>
         <option value="amazonia">Amazonia</option>
         <option value="cheetah-conservation">Cheetah Conservation Station</option>
-        <option value="primates">primates</option>
+        <option value="primates">Primates</option>
     </select>
     <table>
         <colgroup>
@@ -31,111 +31,115 @@
             <col id="exhibit-col"/>
             <col id="demo-col"/>
         </colgroup>
-        <tr>
+        <thead>
+        <tr class="header">
             <th>Time</th>
             <th>Exhibit</th>
             <th>Demo</th>
         </tr>
-        <tr>
-            <td>10:30 AM</td>
-            <td class="amazonia">Amazonia</td>
-            <td>Meet an Andean Bear Keeper</td>
-        </tr>
-        <tr>
-            <td>10:30 AM</td>
-            <td class="elephant-trails">Elephant Trails</td>
-            <td>Keeper Demo at the Elephant Community Center or Elephant Outpost (check signs at the exhibit)</td>
-        </tr>
-        <tr>
-            <td>10:30 AM</td>
-            <td class="small-mammal">Small Mammal House</td>
-            <td>Meet a Small Mammal</td>
-        </tr>
-        <tr>
-            <td>11:00 AM</td>
-            <td class="amazonia">Amazonia</td>
-            <td>Pool Feeding or Electric Eel Feeding</td>
-        </tr>
-        <tr>
-            <td>11:00 AM</td>
-            <td class="great-cats">Great Cats</td>
-            <td>Meet a Lion/Tiger Keeper</td>
-        </tr>
-        <tr>
-            <td>11:00 AM</td>
-            <td class="kids-farm">Kids' Farm</td>
-            <td>Meet a Keeper</td>
-        </tr>
-        <tr>
-            <td>11:00 AM</td>
-            <td class="reptile-discovery">Reptile Discovery Center</td>
-            <td>Meet a Reptile or Amphibian</td>
-        </tr>
-        <tr>
-            <td>11:15 AM</td>
-            <td class="american-trail">American Trail</td>
-            <td>Seal or Sea Lion Demo</td>
-        </tr>
-        <tr>
-            <td>11:30 AM</td>
-            <td class="primates">Primates</td>
-            <td>Gorilla Keeper Talk</td>
-        </tr>
-        <tr>
-            <td>1:00 PM</td>
-            <td class="amazonia">Amazonia</td>
-            <td>Keeper Choice</td>
-        </tr>
-        <tr>
-            <td>1:15 PM</td>
-            <td class="american-trail">American Trail</td>
-            <td>Keeper Choice</td>
-        </tr>
-        <tr>
-            <td>1:15 PM</td>
-            <td class="cheetah-conservation">Cheetah Conservation Station</td>
-            <td>Keeper Choice</td>
-        </tr>
-        <tr>
-            <td>1:30 PM</td>
-            <td class="amazonia">Amazonia</td>
-            <td>Nikki Mounts</td>
-        </tr>
-        <tr>
-            <td>1:30 PM</td>
-            <td class="kids-farm">Kids' Farm</td>
-            <td>Meet a Keeper</td>
-        </tr>
-        <tr>
-            <td>2:00 PM</td>
-            <td class="asia-trail">Asia Trail</td>
-            <td>Giant Panda Feeding</td>
-        </tr>
-        <tr>
-            <td>2:00 PM</td>
-            <td class="claws-paws">Claws & Paws Pathway</td>
-            <td>Meet a Keeper</td>
-        </tr>
-        <tr>
-            <td>2:00 PM</td>
-            <td class="primates">Primates</td>
-            <td>Lemur Demo at Lemur Island</td>
-        </tr>
-        <tr>
-            <td>2:00 PM</td>
-            <td class="reptile-discovery">Reptile Discovery Center</td>
-            <td>Meet a Reptile or Amphibian</td>
-        </tr>
-        <tr>
-            <td>2:00 PM</td>
-            <td class="small-mammal">Small Mammal House</td>
-            <td>Meet a Small Mammal</td>
-        </tr>
-        <tr>
-            <td>3:00 PM</td>
-            <td class="elephant-trails">Elephant Trails</td>
-            <td>Keeper Demo at the Elephant Community Center</td>
-        </tr>
+        </thead>
+        <tbody>
+            <tr class="amazonia"> 
+                <td>10:30 AM</td>
+                <td>Amazonia</td>
+                <td>Meet an Andean Bear Keeper</td>
+            </tr>
+            <tr class="elephant-trails">
+                <td>10:30 AM</td>
+                <td>Elephant Trails</td>
+                <td>Keeper Demo at the Elephant Community Center or Elephant Outpost (check signs at the exhibit)</td>
+            </tr>
+            <tr class="small-mammal">
+                <td>10:30 AM</td>
+                <td>Small Mammal House</td>
+                <td>Meet a Small Mammal</td>
+            </tr>
+            <tr class="amazonia">
+                <td>11:00 AM</td>
+                <td>Amazonia</td>
+                <td>Pool Feeding or Electric Eel Feeding</td>
+            </tr>
+            <tr class="great-cats">
+                <td>11:00 AM</td>
+                <td>Great Cats</td>
+                <td>Meet a Lion/Tiger Keeper</td>
+            </tr>
+            <tr class="kids-farm">
+                <td>11:00 AM</td>
+                <td>Kids' Farm</td>
+                <td>Meet a Keeper</td>
+            </tr>
+            <tr class="reptile-discovery">
+                <td>11:00 AM</td>
+                <td>Reptile Discovery Center</td>
+                <td>Meet a Reptile or Amphibian</td>
+            </tr>
+            <tr class="american-trail">
+                <td>11:15 AM</td>
+                <td>American Trail</td>
+                <td>Seal or Sea Lion Demo</td>
+            </tr>
+            <tr class="primates">
+                <td>11:30 AM</td>
+                <td>Primates</td>
+                <td>Gorilla Keeper Talk</td>
+            </tr>
+            <tr class="amazonia">
+                <td>1:00 PM</td>
+                <td>Amazonia</td>
+                <td>Keeper Choice</td>
+            </tr>
+            <tr class="american-trail">
+                <td>1:15 PM</td>
+                <td>American Trail</td>
+                <td>Keeper Choice</td>
+            </tr>
+            <tr class="cheetah-conservation">
+                <td>1:15 PM</td>
+                <td>Cheetah Conservation Station</td>
+                <td>Keeper Choice</td>
+            </tr>
+            <tr class="amazonia">
+                <td>1:30 PM</td>
+                <td>Amazonia</td>
+                <td>Nikki Mounts</td>
+            </tr>
+            <tr class="kids-farm">
+                <td>1:30 PM</td>
+                <td>Kids' Farm</td>
+                <td>Meet a Keeper</td>
+            </tr>
+            <tr class="asia-trail">
+                <td>2:00 PM</td>
+                <td>Asia Trail</td>
+                <td>Giant Panda Feeding</td>
+            </tr>
+            <tr class="claws-paws">
+                <td>2:00 PM</td>
+                <td>Claws & Paws Pathway</td>
+                <td>Meet a Keeper</td>
+            </tr>
+            <tr class="primates">
+                <td>2:00 PM</td>
+                <td>Primates</td>
+                <td>Lemur Demo at Lemur Island</td>
+            </tr>
+            <tr class="reptile-discovery">
+                <td>2:00 PM</td>
+                <td>Reptile Discovery Center</td>
+                <td>Meet a Reptile or Amphibian</td>
+            </tr>
+            <tr class="small-mammal">
+                <td>2:00 PM</td>
+                <td>Small Mammal House</td>
+                <td>Meet a Small Mammal</td>
+            </tr>
+            <tr class="elephant-trails">
+                <td>3:00 PM</td>
+                <td>Elephant Trails</td>
+                <td>Keeper Demo at the Elephant Community Center</td>
+            </tr>
+        </tbody>
     </table>
     <script src="main.js"></script>
 </body>
