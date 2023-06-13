@@ -1,23 +1,65 @@
-h1 {
-    color: blue;
-}
-
 table {
-    border: 1px solid;
+    border: 1px solid black;
     border-collapse: collapse;
     table-layout: fixed;
-    width: 100%;
+    width: 96%;
+    margin: 20px 2%;
 }
 
 th, td {
     padding: 5px;
     text-align: left;
+    border: 1px solid black;
 }
 
-#timeCol {
+#time-col {
     width: 100px;
 }
 
-#exhibitCol {
+#exhibit-col {
     width: 200px;
+}
+
+.elephant-trails {
+    color: gray;
+}
+
+.amazonia {
+    color: green;
+}
+
+.small-mammal {
+    color: tan;
+}
+
+.cheetah-conservation {
+    color: darkgoldenrod;
+}
+
+.primates {
+    color: navy;
+}
+
+.reptile-discovery {
+    color: red;
+}
+
+.american-trail {
+    color: purple;
+}
+
+.asia-trail {
+    color: pink;
+}
+
+.great-cats {
+    color: orange;
+}
+
+.kids-farm {
+    color: skyblue;
+}
+
+.claws-paws {
+    color: greenyellow;
 }
