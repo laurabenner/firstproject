@@ -5,10 +5,15 @@ h1 {
     padding: 20px;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     background-image: url(images/all.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    height: 100%;
 }
 
 h1, body {
@@ -19,6 +24,8 @@ h1, body {
     margin: 10px;
     padding: 10px;
     width: 450px;
+    height: 85%;
+    overflow: scroll;
     background-color: white;
     border: 1px solid black;
     border-radius: 5px;
@@ -47,46 +54,66 @@ th, td {
     width: 30%;
 }
 
-.elephant-trails td:nth-child(2) {
+.elephant-trails a {
     color: rgb(53, 144, 243);
 }
 
-.amazonia td:nth-child(2) {
+.amazonia a {
     color: #F26419;
 }
 
-.small-mammal td:nth-child(2) {
+.small-mammal a {
     color: #87B37A;
 }
 
-.cheetah-conservation td:nth-child(2) {
+.cheetah-conservation a {
     color: #2F4858;
 }
 
-.primates td:nth-child(2) {
+.primates a {
     color: #F6AE2D;
 }
 
-.reptile-discovery td:nth-child(2) {
+.reptile-discovery a{
     color: #987175;
 }
 
-.american-trail td:nth-child(2) {
+.american-trail a {
     color: #06893C;
 }
 
-.asia-trail td:nth-child(2) {
+.asia-trail a {
     color: #084C61;
 }
 
-.great-cats td:nth-child(2) {
+.great-cats a {
     color: #F7ACCF;
 }
 
-.kids-farm td:nth-child(2) {
+.kids-farm a {
     color: #C62606;
 }
 
-.claws-paws td:nth-child(2) {
+.claws-paws a {
     color: #4CB5AE;
+}
+
+.tile-grid {
+    display: grid;
+}
+
+.tile {
+    background-color: white;
+    border: 5px solid lightblue;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.time, .exhibit {
+    display: inline;
+}
+
+.exhibit {
+    color: green;
 }
