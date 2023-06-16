@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Demo Schedule</title>
+    <link href="style2.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <h1>ANIMAL DEMOS</h1>
+    <section id="content">
+    <label for="exhibit-select">Search by exhibit: </label>
+
+    <select name="exhibits" id="exhibit-select" onchange="changeExhibit()">
+        <option value="all">All Exhibits</option>
+        <option value="amazonia">Amazonia</option>
+        <option value="american-trail">American Trail</option>
+        <option value="asia-trail">Asia Trail</option>
+        <option value="cheetah-conservation">Cheetah Conservation Station</option>
+        <option value="claws-paws">Claws & Paws Pathway</option>
+        <option value="elephant-trails">Elephant Trails</option>
+        <option value="great-cats">Great Cats</option>
+        <option value="kids-farm">Kids' Farm</option>
+        <option value="primates">Primates</option>
+        <option value="reptile-discovery">Reptile Discovery Center</option>
+        <option value="small-mammal">Small Mammal House</option>
+    </select>
+
+    <button onclick="arrangeByExhibit()">Arrange By Exhibit</button>
+    <button onclick="arrangeByTime()">Arrange By Time</button>
+
+    <br>
+    <label for="arrival">Arrival Time:</label>
+    <input type="time" id="arrival" name="arrival" min="08:00" max="18:00" value="08:00" onchange="changeArrivalTime()" required>
+    <label for="departure">Departure Time:</label>
+    <input type="time" id="departure" name="departure" min="08:00" max="18:00" value="18:00" onchange="changeDepartureTime()" required>
+
+    <div class="tile-grid">
+        <div class="tile" data-time="10:30" data-exhibit="amazonia">
+            <p class="times">10:30 AM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/amazonia">AMAZONIA</a></p>
+            <p class="demo">Meet an Andean Bear Keeper</p>
+        </div>
+        <div class="tile" data-time="10:30" data-exhibit="elephant-trails">
+            <p class="times">10:30 AM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/elephant-trails">ELEPHANT TRAILS</a></p>
+            <p class="demo">Keeper Demo at the Elephant Community Center or Elephant Outpost (check signs at the exhibit)</p>
+        </div>
+        <div class="tile" data-time="10:30" data-exhibit="small-mammal">
+            <p class="times">10:30 AM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/small-mammal-house">SMALL MAMMAL HOUSE</a></p>
+            <p class="demo">Meet a Small Mammal</p>
+        </div>
+        <div class="tile" data-time="11:00" data-exhibit="amazonia">
+            <p class="times">11:00 AM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/amazonia">AMAZONIA</a></p>
+            <p class="demo">Pool Feeding or Electric Eel Feeding</p>
+        </div>
+        <div class="tile" data-time="11:00" data-exhibit="great-cats">
+            <p class="times">11:00 AM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/great-cats">GREAT CATS</a></p>
+            <p class="demo">Meet a Lion/Tiger Keeper</p>
+        </div>
+        <div class="tile" data-time="11:00" data-exhibit="kids-farm">
+            <p class="times">11:00 AM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/kids-farm">KIDS' FARM</a></p>
+            <p class="demo">Meet a Keeper</p>
+        </div>
+        <div class="tile" data-time="11:00" data-exhibit="reptile-discovery">
+            <p class="times">11:00 AM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/reptile-discovery-center">REPTILE DISCOVERY CENTER</a></p>
+            <p class="demo">Meet a Reptile or Amphibian</p>
+        </div>
+        <div class="tile" data-time="11:15" data-exhibit="american-trail">
+            <p class="times">11:15 AM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/american-trail">AMERICAN TRAIL</a></p>
+            <p class="demo">Seal or Sea Lion Demo</p>
+        </div>
+        <div class="tile" data-time="11:30" data-exhibit="primates">
+            <p class="times">11:30 AM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/primates">PRIMATES</a></p>
+            <p class="demo">Gorilla Keeper Talk</p>
+        </div>
+        <div class="tile" data-time="13:00" data-exhibit="amazonia">
+            <p class="times">1:00 PM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/amazonia">AMAZONIA</a></p>
+            <p class="demo">Keeper Choice</p>
+        </div>
+        <div class="tile" data-time="13:15" data-exhibit="american-trail">
+            <p class="times">1:15 PM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/american-trail">AMERICAN TRAIL</a></p>
+            <p class="demo">Keeper Choice</p>
+        </div>
+        <div class="tile" data-time="13:15" data-exhibit="cheetah-conservation">
+            <p class="times">1:15 PM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/cheetah-conservation-station">CHEETAH CONSERVATION STATION</a></p>
+            <p class="demo">Keeper Choice</p>
+        </div>
+        <div class="tile" data-time="13:30" data-exhibit="amazonia">
+            <p class="times">1:30 PM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/amazonia">AMAZONIA</a></p>
+            <p class="demo">Nikki Mounts</p>
+        </div>
+        <div class="tile" data-time="13:30" data-exhibit="kids-farm">
+            <p class="times">1:30 PM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/kids-farm">KIDS' FARM</a></p>
+            <p class="demo">Meet a Keeper</p>
+        </div>
+        <div class="tile" data-time="14:00" data-exhibit="asia-trail">
+            <p class="times">2:00 PM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/asia-trail">ASIA TRAIL</a></p>
+            <p class="demo">Giant Panda Feeding</p>
+        </div>
+        <div class="tile" data-time="14:00" data-exhibit="claws-paws">
+            <p class="times">2:00 PM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/claws-paws-pathway">CLAWS & PAWS PATHWAY</a></p>
+            <p class="demo">Meet a Keeper</p>
+        </div>
+        <div class="tile" data-time="14:00" data-exhibit="primates">
+            <p class="times">2:00 PM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/primates">PRIMATES</a></p>
+            <p class="demo">Lemur Demo at Lemur Island</p>
+        </div>
+        <div class="tile" data-time="14:00" data-exhibit="reptile-discovery">
+            <p class="times">2:00 PM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/reptile-discovery-center">REPTILE DISCOVERY CENTER</a></p>
+            <p class="demo">Meet a Reptile or Amphibian</p>
+        </div>
+        <div class="tile" data-time="14:00" data-exhibit="small-mammal">
+            <p class="times">2:00 PM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/small-mammal-house">SMALL MAMMAL HOUSE</a></p>
+            <p class="demo">Meet a Small Mammal</p>
+        </div>
+        <div class="tile" data-time="17:00" data-exhibit="elephant-trails">
+            <p class="times">3:00 PM</p>
+            <p class="exhibit"><a href="https://nationalzoo.si.edu/animals/exhibits/elephant-trails">ELEPHANT TRAILS</a></p>
+            <p class="demo">Keeper Demo at the Elephant Community Center</p>
+        </div>
+    </div>
+    </section>
+    
+
+    <script src="main2.js"></script>
+</body>
+</html>
