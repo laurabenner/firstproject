@@ -30,13 +30,8 @@ h1, body {
     border-radius: 10px;
 }
 
-table {
-    border: 1px solid black;
-    border-collapse: collapse;
-    table-layout: fixed;
-    width: 100%;
-    margin-top: 20px;
-    background-color: white;
+.exhibit {
+    padding-left: 5px;
 }
 
 [data-exhibit="elephant-trails"] a {
@@ -44,7 +39,7 @@ table {
     text-decoration-line: none;
 }
 
-.tile[data-exhibit="elephant-trails"]{
+.demo[data-exhibit="elephant-trails"]{
     border: 3px solid rgb(53, 144, 243);
 }
 
@@ -58,7 +53,7 @@ table {
     text-decoration-line: none;
 }
 
-.tile[data-exhibit="amazonia"]{
+.demo[data-exhibit="amazonia"]{
     border: 3px solid #F26419;
 }
 
@@ -67,30 +62,30 @@ table {
     text-decoration-line: underline;
 }
 
-[data-exhibit="small-mammal"] a {
+[data-exhibit="small-mammal-house"] a {
     color: #87B37A;
     text-decoration-line: none;
 }
 
-.tile[data-exhibit="small-mammal"]{
+.demo[data-exhibit="small-mammal-house"]{
     border: 3px solid #87B37A;
 }
 
-[data-exhibit="small-mammal"] a:hover {
+[data-exhibit="small-mammal-house"] a:hover {
     color: #4c6e41;
     text-decoration-line: underline;
 }
 
-[data-exhibit="cheetah-conservation"] a {
+[data-exhibit="cheetah-conservation-station"] a {
     color: #2F4858;
     text-decoration-line: none;
 }
 
-.tile[data-exhibit="cheetah-conservation"]{
+.demo[data-exhibit="cheetah-conservation-station"]{
     border: 3px solid #2F4858;
 }
 
-[data-exhibit="cheetah-conservation"] a:hover {
+[data-exhibit="cheetah-conservation-station"] a:hover {
     color: #1270aa;
     text-decoration-line: underline;
 }
@@ -100,7 +95,7 @@ table {
     text-decoration-line: none;
 }
 
-.tile[data-exhibit="primates"]{
+.demo[data-exhibit="primates"]{
     border: 3px solid #F6AE2D;
 }
 
@@ -109,16 +104,16 @@ table {
     text-decoration-line: underline;
 }
 
-[data-exhibit="reptile-discovery"] a {
+[data-exhibit="reptile-discovery-center"] a {
     color: #987175;
     text-decoration-line: none;
 }
 
-.tile[data-exhibit="reptile-discovery"]{
+.demo[data-exhibit="reptile-discovery-center"]{
     border: 3px solid #996606;
 }
 
-[data-exhibit="reptile-discovery"] a:hover {
+[data-exhibit="reptile-discovery-center"] a:hover {
     color: #78101b;
     text-decoration-line: underline;
 }
@@ -128,7 +123,7 @@ table {
     text-decoration-line: none;
 }
 
-.tile[data-exhibit="american-trail"]{
+.demo[data-exhibit="american-trail"]{
     border: 3px solid #06893C;
 }
 
@@ -142,7 +137,7 @@ table {
     text-decoration-line: none;
 }
 
-.tile[data-exhibit="asia-trail"]{
+.demo[data-exhibit="asia-trail"]{
     border: 3px solid #084C61;
 }
 
@@ -156,7 +151,7 @@ table {
     text-decoration-line: none;
 }
 
-.tile[data-exhibit="great-cats"]{
+.demo[data-exhibit="great-cats"]{
     border: 3px solid #F7ACCF;
 }
 
@@ -170,7 +165,7 @@ table {
     text-decoration-line: none;
 }
 
-.tile[data-exhibit="kids-farm"]{
+.demo[data-exhibit="kids-farm"]{
     border: 3px solid #C62606;
 }
 
@@ -179,25 +174,25 @@ table {
     text-decoration-line: underline;
 }
 
-[data-exhibit="claws-paws"] a {
+[data-exhibit="claws-paws-pathway"] a {
     color: #4CB5AE;
     text-decoration-line: none;
 }
 
-.tile[data-exhibit="claws-paws"]{
+.demo[data-exhibit="claws-paws-pathway"]{
     border: 3px solid #4CB5AE;
 }
 
-[data-exhibit="claws-paws"] a:hover {
+[data-exhibit="claws-paws-pathway"] a:hover {
     color: #1b5c58;
     text-decoration-line: underline;
 }
 
-.tile-grid {
+#demo-grid {
     display: grid;
 }
 
-.tile {
+.demo {
     background-color: white;
     border: 5px solid white;
     border-radius: 5px;
@@ -205,12 +200,8 @@ table {
     margin-top: 5px;
 }
 
-.times, .exhibit {
+.time, .exhibit {
     display: inline;
-}
-
-.exhibit {
-    color: green;
 }
 
 select {
