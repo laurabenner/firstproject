@@ -30,157 +30,178 @@ h1, body {
     border-radius: 10px;
 }
 
-table {
-    border: 1px solid black;
-    border-collapse: collapse;
-    table-layout: fixed;
-    width: 100%;
-    margin-top: 20px;
-    background-color: white;
+.exhibit {
+    padding-left: 5px;
 }
 
-th, td {
-    padding: 5px;
-    text-align: left;
-    border: 1px solid black;
-}
-
-#time-col {
-    width: 20%;
-}
-
-#exhibit-col {
-    width: 30%;
-}
-
-.elephant-trails a {
+[data-exhibit="elephant-trails"] a {
     color: rgb(53, 144, 243);
     text-decoration-line: none;
 }
 
-.elephant-trails a:hover {
+.demo[data-exhibit="elephant-trails"]{
+    border: 3px solid rgb(53, 144, 243);
+}
+
+[data-exhibit="elephant-trails"] a:hover {
     color: rgb(18, 61, 107);
     text-decoration-line: underline;
 }
 
-.amazonia a {
+[data-exhibit="amazonia"] a {
     color: #F26419;
     text-decoration-line: none;
 }
 
-.amazonia a:hover {
+.demo[data-exhibit="amazonia"]{
+    border: 3px solid #F26419;
+}
+
+[data-exhibit="amazonia"] a:hover {
     color: #74310d;
     text-decoration-line: underline;
 }
 
-.small-mammal a {
+[data-exhibit="small-mammal-house"] a {
     color: #87B37A;
     text-decoration-line: none;
 }
 
-.small-mammal a:hover {
+.demo[data-exhibit="small-mammal-house"]{
+    border: 3px solid #87B37A;
+}
+
+[data-exhibit="small-mammal-house"] a:hover {
     color: #4c6e41;
     text-decoration-line: underline;
 }
 
-.cheetah-conservation a {
+[data-exhibit="cheetah-conservation-station"] a {
     color: #2F4858;
     text-decoration-line: none;
 }
 
-.cheetah-conservation a:hover {
+.demo[data-exhibit="cheetah-conservation-station"]{
+    border: 3px solid #2F4858;
+}
+
+[data-exhibit="cheetah-conservation-station"] a:hover {
     color: #1270aa;
     text-decoration-line: underline;
 }
 
-.primates a {
+[data-exhibit="primates"] a {
     color: #F6AE2D;
     text-decoration-line: none;
 }
 
-.primates a:hover {
+.demo[data-exhibit="primates"]{
+    border: 3px solid #F6AE2D;
+}
+
+[data-exhibit="primates"] a:hover {
     color: #996606;
     text-decoration-line: underline;
 }
 
-.reptile-discovery a {
+[data-exhibit="reptile-discovery-center"] a {
     color: #987175;
     text-decoration-line: none;
 }
 
-.reptile-discovery a:hover {
+.demo[data-exhibit="reptile-discovery-center"]{
+    border: 3px solid #996606;
+}
+
+[data-exhibit="reptile-discovery-center"] a:hover {
     color: #78101b;
     text-decoration-line: underline;
 }
 
-.american-trail a {
+[data-exhibit="american-trail"] a {
     color: #06893C;
     text-decoration-line: none;
 }
 
-.american-trail a:hover {
+.demo[data-exhibit="american-trail"]{
+    border: 3px solid #06893C;
+}
+
+[data-exhibit="american-trail"] a:hover {
     color: #044b21;
     text-decoration-line: underline;
 }
 
-.asia-trail a {
+[data-exhibit="asia-trail"] a {
     color: #084C61;
     text-decoration-line: none;
 }
 
-.asia-trail a:hover {
+.demo[data-exhibit="asia-trail"]{
+    border: 3px solid #084C61;
+}
+
+[data-exhibit="asia-trail"] a:hover {
     color: #378096;
     text-decoration-line: underline;
 }
 
-.great-cats a {
+[data-exhibit="great-cats"] a {
     color: #F7ACCF;
     text-decoration-line: none;
 }
 
-.great-cats a:hover {
+.demo[data-exhibit="great-cats"]{
+    border: 3px solid #F7ACCF;
+}
+
+[data-exhibit="great-cats"] a:hover {
     color: #db0e6e;
     text-decoration-line: underline;
 }
 
-.kids-farm a {
+[data-exhibit="kids-farm"] a {
     color: #C62606;
     text-decoration-line: none;
 }
 
-.kids-farm a:hover {
+.demo[data-exhibit="kids-farm"]{
+    border: 3px solid #C62606;
+}
+
+[data-exhibit="kids-farm"] a:hover {
     color: #881a04;
     text-decoration-line: underline;
 }
 
-.claws-paws a {
+[data-exhibit="claws-paws-pathway"] a {
     color: #4CB5AE;
     text-decoration-line: none;
 }
 
-.claws-paws a:hover {
+.demo[data-exhibit="claws-paws-pathway"]{
+    border: 3px solid #4CB5AE;
+}
+
+[data-exhibit="claws-paws-pathway"] a:hover {
     color: #1b5c58;
     text-decoration-line: underline;
 }
 
-.tile-grid {
+#demo-grid {
     display: grid;
 }
 
-.tile {
+.demo {
     background-color: white;
-    border: 5px solid lightblue;
+    border: 5px solid white;
     border-radius: 5px;
     padding: 10px;
     margin-top: 5px;
 }
 
-.times, .exhibit {
+.time, .exhibit {
     display: inline;
-}
-
-.exhibit {
-    color: green;
 }
 
 select {

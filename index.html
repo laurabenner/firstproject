@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animal Demo Schedule</title>
-    <link href="style.css" rel="stylesheet" />
+    <link href="style2.css" rel="stylesheet" />
     
 </head>
 <body>
@@ -13,148 +13,35 @@
     <section id="content">
     <label for="exhibit-select">Search by exhibit: </label>
 
-    <select name="exhibits" id="exhibit-select" onchange="run()">
+    <select name="exhibits" id="exhibit-select" onchange="changeExhibit()">
         <option value="all">All Exhibits</option>
         <option value="amazonia">Amazonia</option>
         <option value="american-trail">American Trail</option>
         <option value="asia-trail">Asia Trail</option>
-        <option value="cheetah-conservation">Cheetah Conservation Station</option>
-        <option value="claws-paws">Claws & Paws Pathway</option>
+        <option value="cheetah-conservation-station">Cheetah Conservation Station</option>
+        <option value="claws-paws-pathway">Claws & Paws Pathway</option>
         <option value="elephant-trails">Elephant Trails</option>
         <option value="great-cats">Great Cats</option>
         <option value="kids-farm">Kids' Farm</option>
         <option value="primates">Primates</option>
-        <option value="reptile-discovery">Reptile Discovery Center</option>
-        <option value="small-mammal">Small Mammal House</option>
+        <option value="reptile-discovery-center">Reptile Discovery Center</option>
+        <option value="small-mammal-house">Small Mammal House</option>
     </select>
 
     <br>
-    <label for="arrival">Arrival Time:</label>
-    <input type="time" id="arrival" name="arrival" min="08:00" max="18:00" value="08:00" onchange="run()" required>
+    <button onclick="sortByTime()">Sort By Time</button>
+    <button onclick="sortByExhibit()">Sort By Exhibit</button>
+
     <br>
+    <label for="arrival">Arrival Time:</label>
+    <input type="time" id="arrival" name="arrival" min="08:00" max="18:00" value="08:00" onchange="changeArrivalTime()">
     <label for="departure">Departure Time:</label>
-    <input type="time" id="departure" name="departure" min="08:00" max="18:00" value="18:00" onchange="run()" required>
+    <input type="time" id="departure" name="departure" min="08:00" max="18:00" value="18:00" onchange="changeDepartureTime()">
 
-    <table>
-        <colgroup>
-            <col id="time-col"/>
-            <col id="exhibit-col"/>
-            <col id="demo-col"/>
-        </colgroup>
-        <thead>
-        <tr class="header">
-            <th>Time</th>
-            <th>Exhibit</th>
-            <th>Demo</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr class="amazonia"> 
-                <td class="time">10:30 AM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/amazonia" target="_blank" rel="noopener noreferrer">Amazonia</a></td>
-                <td>Meet an Andean Bear Keeper</td>
-            </tr>
-            <tr class="elephant-trails">
-                <td class="time" data-time="10:30">10:30 AM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/elephant-trails" target="_blank" rel="noopener noreferrer">Elephant Trails</a></td>
-                <td>Keeper Demo at the Elephant Community Center or Elephant Outpost (check signs at the exhibit)</td>
-            </tr>
-            <tr class="small-mammal">
-                <td class="time" data-time="10:30">10:30 AM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/small-mammal-house" target="_blank" rel="noopener noreferrer">Small Mammal House</a></td>
-                <td>Meet a Small Mammal</td>
-            </tr>
-            <tr class="amazonia">
-                <td class="time" data-time="11:00:">11:00 AM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/amazonia" target="_blank" rel="noopener noreferrer">Amazonia</a></td>
-                <td>Pool Feeding or Electric Eel Feeding</td>
-            </tr>
-            <tr class="great-cats">
-                <td class="time" data-time="11:00">11:00 AM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/great-cats" target="_blank" rel="noopener noreferrer">Great Cats</a></td>
-                <td>Meet a Lion/Tiger Keeper</td>
-            </tr>
-            <tr class="kids-farm">
-                <td class="time" data-time="11:00">11:00 AM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/kids-farm" target="_blank" rel="noopener noreferrer">Kids' Farm</a></td>
-                <td>Meet a Keeper</td>
-            </tr>
-            <tr class="reptile-discovery">
-                <td class="time" data-time="11:00">11:00 AM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/reptile-discovery-center" target="_blank" rel="noopener noreferrer">Reptile Discovery Center</a></td>
-                <td>Meet a Reptile or Amphibian</td>
-            </tr>
-            <tr class="american-trail">
-                <td class="time" data-time="11:15">11:15 AM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/american-trail" target="_blank" rel="noopener noreferrer">American Trail</a></td>
-                <td>Seal or Sea Lion Demo</td>
-            </tr>
-            <tr class="primates">
-                <td class="time" data-time="11:30">11:30 AM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/primates" target="_blank" rel="noopener noreferrer">Primates</a></td>
-                <td>Gorilla Keeper Talk</td>
-            </tr>
-            <tr class="amazonia">
-                <td class="time" data-time="13:00">1:00 PM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/amazonia" target="_blank" rel="noopener noreferrer">Amazonia</a></td>
-                <td>Keeper Choice</td>
-            </tr>
-            <tr class="american-trail">
-                <td class="time" data-time="13:15">1:15 PM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/american-trail" target="_blank" rel="noopener noreferrer">American Trail</a></td>
-                <td>Keeper Choice</td>
-            </tr>
-            <tr class="cheetah-conservation">
-                <td class="time" data-time="13:15">1:15 PM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/cheetah-conservation-station" target="_blank" rel="noopener noreferrer">Cheetah Conservation Station</a></td>
-                <td>Keeper Choice</td>
-            </tr>
-            <tr class="amazonia">
-                <td class="time" data-time="13:30">1:30 PM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/amazonia" target="_blank" rel="noopener noreferrer">Amazonia</a></td>
-                <td>Nikki Mounts</td>
-            </tr>
-            <tr class="kids-farm">
-                <td class="time" data-time="13:30">1:30 PM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/kids-farm" target="_blank" rel="noopener noreferrer">Kids' Farm</a></td>
-                <td>Meet a Keeper</td>
-            </tr>
-            <tr class="asia-trail">
-                <td class="time" data-time="14:00">2:00 PM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/asia-trail" target="_blank" rel="noopener noreferrer">Asia Trail</a></td>
-                <td>Giant Panda Feeding</td>
-            </tr>
-            <tr class="claws-paws">
-                <td class="time" data-time="14:00">2:00 PM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/claws-paws-pathway" target="_blank" rel="noopener noreferrer">Claws & Paws Pathway</a></td>
-                <td>Meet a Keeper</td>
-            </tr>
-            <tr class="primates">
-                <td class="time" data-time="14:00">2:00 PM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/primates" target="_blank" rel="noopener noreferrer">Primates</a></td>
-                <td>Lemur Demo at Lemur Island</td>
-            </tr>
-            <tr class="reptile-discovery">
-                <td class="time" data-time="14:00">2:00 PM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/reptile-discovery-center" target="_blank" rel="noopener noreferrer">Reptile Discovery Center</a></td>
-                <td>Meet a Reptile or Amphibian</td>
-            </tr>
-            <tr class="small-mammal">
-                <td class="time" data-time="14:00">2:00 PM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/small-mammal-house" target="_blank" rel="noopener noreferrer">Small Mammal House</a></td>
-                <td>Meet a Small Mammal</td>
-            </tr>
-            <tr class="elephant-trails">
-                <td class="time" data-time="17:00">3:00 PM</td>
-                <td><a href="https://nationalzoo.si.edu/animals/exhibits/elephant-trails" target="_blank" rel="noopener noreferrer">Elephant Trails</a></td>
-                <td>Keeper Demo at the Elephant Community Center</td>
-            </tr>
-        </tbody>
-    </table>
-
+    <div id="demo-grid"></div>
     </section>
     
-
-    <script src="main.js"></script>
+    <script src="jsonData.js"></script>
+    <script src="main2.js"></script>
 </body>
 </html>
