@@ -17,7 +17,6 @@ function fetchDemos() {
         divElement.setAttribute('data-time', transformTime(demo.Time));
         divElement.setAttribute('data-exhibit', transformExhibit(demo.Exhibit));
 
-        // Create p elements
         const timeParagraph = document.createElement('p');
         timeParagraph.setAttribute('class', 'time');
         timeParagraph.textContent = demo.Time;
@@ -33,14 +32,14 @@ function fetchDemos() {
         descriptionParagraph.setAttribute('class', 'description');
         descriptionParagraph.textContent = demo.Demo;
 
-        // Append p elements to the div element
         divElement.appendChild(timeParagraph);
         divElement.appendChild(exhibitParagraph);
         divElement.appendChild(descriptionParagraph);
 
-        // Append the div element to an existing HTML element
-        const container = document.getElementById('demo-grid'); // Replace 'container' with the ID of your desired parent element
+        const container = document.getElementById('demo-grid');
         container.appendChild(divElement);
+
+        sortByTime();
     })
 }
 
@@ -85,6 +84,41 @@ function changeExhibit() {
     }
 
     changePicture(exhibitSelected);
+}
+
+function sortByTime() {
+    let allDemos = Array.from(getDemos());
+
+    allDemos.sort((demoA, demoB) => {
+        const timeA = demoA.getAttribute('data-time');
+        const timeB = demoB.getAttribute('data-time');
+      
+        const dateA = new Date(`1970-01-01T${timeA}`);
+        const dateB = new Date(`1970-01-01T${timeB}`);
+
+        return dateA - dateB;
+      });
+    
+    allDemos.forEach(demo => {
+        const container = document.getElementById('demo-grid');
+        container.appendChild(demo);
+      })
+}
+
+function sortByExhibit() {
+    let allDemos = Array.from(getDemos());
+
+    allDemos.sort((demoA, demoB) => {
+        const exhibitA = demoA.getAttribute('data-exhibit');
+        const exhibitB = demoB.getAttribute('data-exhibit');
+
+        return exhibitA.localeCompare(exhibitB);
+      });
+    
+    allDemos.forEach(demo => {
+        const container = document.getElementById('demo-grid');
+        container.appendChild(demo);
+      })
 }
 
 function getDemos() {
