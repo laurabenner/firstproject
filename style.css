@@ -7,6 +7,7 @@ h1 {
 
 html {
     height: 100%;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -76,16 +77,16 @@ h1, body {
     text-decoration-line: underline;
 }
 
-[data-exhibit="cheetah-conservation-station"] a {
+[data-exhibit="africa-trail"] a {
     color: #2F4858;
     text-decoration-line: none;
 }
 
-.demo[data-exhibit="cheetah-conservation-station"]{
+.demo[data-exhibit="africa-trail"]{
     border: 3px solid #2F4858;
 }
 
-[data-exhibit="cheetah-conservation-station"] a:hover {
+[data-exhibit="africa-trail"] a:hover {
     color: #1270aa;
     text-decoration-line: underline;
 }
