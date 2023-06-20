@@ -5,55 +5,12 @@ fetchDemos();
 fetchAnimals();
 
 function fetchDemos() {
-    // Get 24-hour time strings
-    const transformTime = timeString =>
-        timeString.replace(/(\d+):(\d+) (AM|PM)/, (_, h, m, p) => `${String(p === 'PM' ? +h + 12 : h).padStart(2, '0')}:${m}`);
-    // Get hyphenated exhibit strings
-    const transformExhibit = exhibitString =>
-        exhibitString.toLowerCase().replaceAll(" & ", "-").replaceAll(" ", "-").replaceAll("'", "");
-
     fetch("jsonData.json")
         .then(response => response.json())
         .then(data => {
-            data.forEach(demo => {
-                const divElement = document.createElement("div");
-                divElement.setAttribute("class", "demo");
-                divElement.setAttribute("data-time", transformTime(demo.Time));
-                divElement.setAttribute("data-exhibit", transformExhibit(demo.Exhibit));
-
-                const timeParagraph = document.createElement("p");
-                timeParagraph.setAttribute("class", "time");
-                timeParagraph.textContent = demo.Time;
-
-                const exhibitParagraph = document.createElement("p");
-                exhibitParagraph.setAttribute("class", "exhibit");
-                const exhibitLink = document.createElement("a");
-                exhibitLink.setAttribute(
-                    "href",
-                    "https://nationalzoo.si.edu/animals/exhibits/" + transformExhibit(demo.Exhibit)
-                );
-                exhibitLink.setAttribute("target", "_blank");
-                exhibitLink.textContent = demo.Exhibit.toUpperCase();
-                exhibitParagraph.appendChild(exhibitLink);
-
-                const descriptionParagraph = document.createElement("p");
-                descriptionParagraph.setAttribute("class", "description");
-                descriptionParagraph.textContent = demo.Demo;
-
-                divElement.appendChild(timeParagraph);
-                divElement.appendChild(exhibitParagraph);
-                divElement.appendChild(descriptionParagraph);
-
-                const container = document.getElementById("demo-grid");
-                container.appendChild(divElement);
-
-                sortByTime();
-
-                const totalDemos = getDemos().length;
-                keepExhibit = new Array(totalDemos).fill(true);
-                keepArrive = new Array(totalDemos).fill(true);
-                keepDepart = new Array(totalDemos).fill(true);
-            });
+            data.forEach(demo => addDemoToPage(demo));
+            sortByTime();
+            initializeKeeps();
         })
         .catch(error => {
             console.error("Error:", error);
@@ -61,29 +18,38 @@ function fetchDemos() {
 }
 
 function fetchAnimals() {
-    const transformExhibit = string => string.toLowerCase().replaceAll(" &amp; ", "").replaceAll("&#039;", "").replaceAll(" ", "-");
-    const transformAnimal = string => string.toUpperCase().replaceAll("&amp;", "&").replaceAll("&#039;", "'");
-
     let animalList = new Array();
     let exhibitList = new Array();
     let imageList = new Array();
+
     fetch("animaldata.json")
         .then(response => response.json())
         .then(data => {
             const dataArray = Object.values(data);
             dataArray.forEach(animal => {
                 if (Array.isArray(animal.exhibit_name) && animal.exhibit_name.length > 0) {
-                    animalList.push(transformAnimal(animal.title));
-                    exhibitList.push(transformExhibit(animal.exhibit_name[0]));
+                    animalList.push(transformAnimalString(animal.title));
+                    exhibitList.push(transformExhibitString(animal.exhibit_name[0]));
                     imageList.push(animal.image_small);
                 }
             });
-            console.log(animalList);
-            console.log(exhibitList);
         })
         .catch(error => {
             console.error("Error: ", error);
         })
+}
+
+function addDemoToPage(demo) {
+    const divElement = createDiv(demo);
+    const timeParagraph = createTimeParagraph(demo);
+    const exhibitParagraph = createExhibitParagraph(demo);
+    const descriptionParagraph = createDescriptionParagraph(demo);
+    const container = document.getElementById("demo-grid");
+
+    divElement.appendChild(timeParagraph);
+    divElement.appendChild(exhibitParagraph);
+    divElement.appendChild(descriptionParagraph);
+    container.appendChild(divElement);
 }
 
 function changeArrivalTime() {
@@ -159,6 +125,61 @@ function sortByExhibit() {
         const container = document.getElementById('demo-grid');
         container.appendChild(demo);
     })
+}
+
+function createDiv(demo) {
+    const divElement = document.createElement("div");
+    divElement.setAttribute("class", "demo");
+    divElement.setAttribute("data-time", transformTimeString(demo.Time));
+    divElement.setAttribute("data-exhibit", transformExhibitString(demo.Exhibit));
+    return divElement;
+}
+
+function createTimeParagraph(demo) {
+    const timeParagraph = document.createElement("p");
+    timeParagraph.setAttribute("class", "time");
+    timeParagraph.textContent = demo.Time;
+    return timeParagraph;
+}
+
+function createExhibitParagraph(demo) {
+    const exhibitParagraph = document.createElement("p");
+    exhibitParagraph.setAttribute("class", "exhibit");
+    const exhibitLink = document.createElement("a");
+    exhibitLink.setAttribute(
+        "href",
+        "https://nationalzoo.si.edu/animals/exhibits/" + transformExhibitString(demo.Exhibit)
+    );
+    exhibitLink.setAttribute("target", "_blank");
+    exhibitLink.textContent = demo.Exhibit.toUpperCase();
+    exhibitParagraph.appendChild(exhibitLink);
+    return exhibitParagraph;
+}
+
+function createDescriptionParagraph(demo) {
+    const descriptionParagraph = document.createElement("p");
+    descriptionParagraph.setAttribute("class", "description");
+    descriptionParagraph.textContent = demo.Demo;
+    return descriptionParagraph;
+}
+
+function initializeKeeps() {
+    const totalDemos = getDemos().length;
+    keepExhibit = new Array(totalDemos).fill(true);
+    keepArrive = new Array(totalDemos).fill(true);
+    keepDepart = new Array(totalDemos).fill(true);
+}
+
+function transformTimeString(timeString) {
+    return timeString.replace(/(\d+):(\d+) (AM|PM)/, (_, h, m, p) => `${String(p === 'PM' ? +h + 12 : h).padStart(2, '0')}:${m}`);
+}
+
+function transformExhibitString(exhibitString) {
+    return exhibitString.toLowerCase().replaceAll(" &amp; ", "").replaceAll("&#039;", "").replaceAll(" & ", "-").replaceAll(" ", "-").replaceAll("'", "");
+}
+
+function transformAnimalString(animalString) {
+    return animalString.toUpperCase().replaceAll("&amp;", "&").replaceAll("&#039;", "'");
 }
 
 function getDemos() {
