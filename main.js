@@ -1,9 +1,13 @@
+// Declare global keep variables to be used in functions
 let keepExhibit;
 let keepArrive;
 let keepDepart;
+
+// Get demo and animal data
 fetchDemos();
 fetchAnimals();
 
+// Get demo data from jsonData.json
 function fetchDemos() {
     fetch("jsonData.json")
         .then(response => response.json())
@@ -17,6 +21,7 @@ function fetchDemos() {
         });
 }
 
+// Get animal data from  animaldata.json
 function fetchAnimals() {
     let animalList = new Array();
     let exhibitList = new Array();
@@ -33,33 +38,50 @@ function fetchAnimals() {
                     imageList.push(animal.image_small);
                 }
             });
-            addAnimalsToPage(animalList, imageList);
+            addAnimalsToPage(animalList, imageList, exhibitList);
         })
         .catch(error => {
             console.error("Error: ", error);
         })
 }
 
-function addAnimalsToPage(animalList, imageList) {
+/**
+ * Add animals to page
+ * @param animalList Array of animal names
+ * @param imageList Array of animal image links
+ * @param exhibitList Array of animal exhibit names
+ */
+function addAnimalsToPage(animalList, imageList, exhibitList) {
     const animalGrid = document.getElementById("animal-grid");
+    
     for (let i = 0; i < animalList.length; i++) {
+        const divElement = document.createElement("div");
+        divElement.setAttribute("class", "animal");
+        divElement.setAttribute("data-exhibit", exhibitList[i])
+
         const animalLink = document.createElement("a");
         animalLink.setAttribute("href", getAnimalUrl(animalList[i]));
         animalLink.setAttribute("target", "_blank");
-        const divElement = document.createElement("div");
-        divElement.setAttribute("class", "animal");
         divElement.appendChild(animalLink);
+
         const animalImage = document.createElement("img");
         animalImage.setAttribute("src", imageList[i]);
         animalLink.appendChild(animalImage);
+
         const animalTitle = document.createElement("p");
         animalTitle.textContent = animalList[i];
         animalLink.appendChild(animalTitle);
+
         animalGrid.appendChild(divElement);
     }
 }
 
+/**
+ * Add demos to page
+ * @param {Object} demo Object representing a scheduled demo
+ */
 function addDemoToPage(demo) {
+    console.log(demo);
     const divElement = createDiv(demo);
     const timeParagraph = createTimeParagraph(demo);
     const exhibitParagraph = createExhibitParagraph(demo);
@@ -72,6 +94,9 @@ function addDemoToPage(demo) {
     container.appendChild(divElement);
 }
 
+/**
+ * Remove all demos occurring before arrival time from display
+ */
 function changeArrivalTime() {
     let allDemos = getDemos();
 
@@ -85,6 +110,9 @@ function changeArrivalTime() {
     }
 }
 
+/**
+ * Remove all demos occurring after departure time from display
+ */
 function changeDepartureTime() {
     let allDemos = getDemos();
 
@@ -98,20 +126,32 @@ function changeDepartureTime() {
     }
 }
 
+/**
+ * Remove all demos and animals unrelated to the selected exhibit from display
+ */
 function changeExhibit() {
     let allDemos = getDemos();
+    let allAnimals = getAnimals();
 
-    let exhibitSelected = getExhibit();
+    let exhibitSelected = getExhibitSelected();
 
     for (let i = 0; i < allDemos.length; i++) {
         keepExhibit[i] = allDemos[i].getAttribute("data-exhibit") == exhibitSelected || exhibitSelected == "all";
-        let keep = keepArrive[i] && keepDepart[i] && keepExhibit[i];
-        allDemos[i].style.display = keep ? "table-row" : "none";
+        let keepDemo = keepArrive[i] && keepDepart[i] && keepExhibit[i];
+        allDemos[i].style.display = keepDemo ? "table-row" : "none";
+    }
+    
+    for (let i = 0; i < allAnimals.length; i++) {
+        let keepAnimal = allAnimals[i].getAttribute("data-exhibit") == exhibitSelected || exhibitSelected == "all";
+        allAnimals[i].style.display = keepAnimal ? "grid" : "none";
     }
 
     changePicture(exhibitSelected);
 }
 
+/**
+ * Sort demo display by scheduled time
+ */
 function sortByTime() {
     let allDemos = Array.from(getDemos());
 
@@ -131,6 +171,9 @@ function sortByTime() {
     })
 }
 
+/**
+ * Sort demo display by exhibit
+ */
 function sortByExhibit() {
     let allDemos = Array.from(getDemos());
 
@@ -147,6 +190,11 @@ function sortByExhibit() {
     })
 }
 
+/**
+ * Create div element for demo
+ * @param {Object} demo Object representing a scheduled demo
+ * @returns div element
+ */
 function createDiv(demo) {
     const divElement = document.createElement("div");
     divElement.setAttribute("class", "demo");
@@ -155,6 +203,11 @@ function createDiv(demo) {
     return divElement;
 }
 
+/**
+ * Create p element for demo time
+ * @param {Object} demo Object representing a scheduled demo
+ * @returns p element
+ */
 function createTimeParagraph(demo) {
     const timeParagraph = document.createElement("p");
     timeParagraph.setAttribute("class", "time");
@@ -162,6 +215,11 @@ function createTimeParagraph(demo) {
     return timeParagraph;
 }
 
+/**
+ * Create p element for demo exhibit and link to page
+ * @param {Object} demo Object representing a scheduled demo
+ * @returns p element
+ */
 function createExhibitParagraph(demo) {
     const exhibitParagraph = document.createElement("p");
     exhibitParagraph.setAttribute("class", "exhibit");
@@ -176,6 +234,11 @@ function createExhibitParagraph(demo) {
     return exhibitParagraph;
 }
 
+/**
+ * Create p element for demo description
+ * @param {Object} demo Object representing a scheduled demo
+ * @returns p element
+ */
 function createDescriptionParagraph(demo) {
     const descriptionParagraph = document.createElement("p");
     descriptionParagraph.setAttribute("class", "description");
@@ -183,6 +246,9 @@ function createDescriptionParagraph(demo) {
     return descriptionParagraph;
 }
 
+/**
+ * Set initial keep values to true for all demos
+ */
 function initializeKeeps() {
     const totalDemos = getDemos().length;
     keepExhibit = new Array(totalDemos).fill(true);
@@ -190,42 +256,90 @@ function initializeKeeps() {
     keepDepart = new Array(totalDemos).fill(true);
 }
 
+/**
+ * Format string in 24-hour time
+ * @param {string} timeString 
+ * @returns Transformed string
+ */
 function transformTimeString(timeString) {
     return timeString.replace(/(\d+):(\d+) (AM|PM)/, (_, h, m, p) => `${String(p === 'PM' ? +h + 12 : h).padStart(2, '0')}:${m}`);
 }
 
+/**
+ * Remove special characters, lowercase, and hyphenate string
+ * @param {string} exhibitString 
+ * @returns Transformed string
+ */
 function transformExhibitString(exhibitString) {
-    return exhibitString.toLowerCase().replaceAll(" &amp; ", "").replaceAll("&#039;", "").replaceAll(" & ", "-").replaceAll(" ", "-").replaceAll("'", "");
+    return exhibitString.toLowerCase().replaceAll(" &amp; ", "-").replaceAll("&#039;", "").replaceAll(" & ", "-").replaceAll(" ", "-").replaceAll("'", "");
 }
 
+/**
+ * Replace shortcuts with special characters and capitalize string
+ * @param {string} animalString 
+ * @returns Transformed string
+ */
 function transformAnimalString(animalString) {
     return animalString.toUpperCase().replaceAll("&amp;", "&").replaceAll("&#039;", "'");
 }
 
+/**
+ * Gets URL of the web page of the animal provided as a parameter
+ * @param {string} animal 
+ * @returns URL of animal page
+ */
 function getAnimalUrl(animal) {
     let url = "https://nationalzoo.si.edu/animals/" + animal.toLowerCase().replaceAll("'", "").replaceAll(" ", "-");
     return url;
 }
 
+/**
+ * Gets all demos on page
+ * @returns All demo elements
+ */
 function getDemos() {
     return document.getElementsByClassName("demo");
 }
 
-function getExhibit() {
-    let exhibitSort = document.getElementById("exhibit-select");
-    return exhibitSort.value;
+/**
+ * Gets all animals on page
+ * @returns All animal elements
+ */
+function getAnimals() {
+    return document.getElementsByClassName("animal");
 }
 
+/**
+ * Gets value of exhibit selector
+ * @returns Value of exhibit selector
+ */
+function getExhibitSelected() {
+    let exhibitSelected = document.getElementById("exhibit-select");
+    return exhibitSelected.value;
+}
+
+/**
+ * Gets value of arrival time
+ * @returns Value of arrival time
+ */
 function getArrivalTime() {
     let arrival = document.getElementById("arrival");
     return arrival.value;
 }
 
+/**
+ * Gets value of departure time
+ * @returns Value of departure time
+ */
 function getDepartureTime() {
     let departure = document.getElementById("departure");
     return departure.value;
 }
 
+/**
+ * Changes background image based on the selected exhibit
+ * @param {string} exhibitSelected Value of exhibit selector
+ */
 function changePicture(exhibitSelected) {
     let url = "url('images/" + exhibitSelected + ".jpg')";
     document.body.style.backgroundImage = url;
