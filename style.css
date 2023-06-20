@@ -22,13 +22,29 @@ h1, body {
 }
 
 #content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: "demos animals";
+    height: 90%;
+}
+
+#demo-content {
+    grid-area: "demos";
     margin: 10px;
     padding: 10px;
-    width: 450px;
-    height: 85%;
     overflow: scroll;
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
+}
+
+#animal-content {
+    grid-area: "animals";
+    margin: 10px;
+    padding: 10px;
+    overflow: scroll;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+
 }
 
 .exhibit {
@@ -191,6 +207,20 @@ h1, body {
 
 #demo-grid {
     display: grid;
+}
+
+#animal-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.animal {
+    background-color: white;
+    border: 5px solid white;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px;
+    padding-bottom: 55%;
 }
 
 .demo {

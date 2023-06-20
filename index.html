@@ -1,49 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animal Demo Schedule</title>
     <link href="style.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Google+Sans:400,500,700|Google+Sans+Text:400&amp;lang=en">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link type="text/css" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Google+Sans:400,500,700|Google+Sans+Text:400&amp;lang=en">
 </head>
+
 <body>
     <h1>ANIMAL DEMOS</h1>
     <section id="content">
-    <label for="exhibit-select">Search by exhibit: </label>
+        <section id="demo-content">
+            <label for="exhibit-select">Search by exhibit: </label>
 
-    <select name="exhibits" id="exhibit-select" onchange="changeExhibit()">
-        <option value="all">All Exhibits</option>
-        <option value="amazonia">Amazonia</option>
-        <option value="american-trail">American Trail</option>
-        <option value="asia-trail">Asia Trail</option>
-        <option value="africa-trail">Africa Trail</option>
-        <option value="claws-paws-pathway">Claws & Paws Pathway</option>
-        <option value="elephant-trails">Elephant Trails</option>
-        <option value="great-cats">Great Cats</option>
-        <option value="kids-farm">Kids' Farm</option>
-        <option value="primates">Primates</option>
-        <option value="reptile-discovery-center">Reptile Discovery Center</option>
-        <option value="small-mammal-house">Small Mammal House</option>
-    </select>
+            <select name="exhibits" id="exhibit-select" onchange="changeExhibit()">
+                <option value="all">All Exhibits</option>
+                <option value="amazonia">Amazonia</option>
+                <option value="american-trail">American Trail</option>
+                <option value="asia-trail">Asia Trail</option>
+                <option value="africa-trail">Africa Trail</option>
+                <option value="claws-paws-pathway">Claws & Paws Pathway</option>
+                <option value="elephant-trails">Elephant Trails</option>
+                <option value="great-cats">Great Cats</option>
+                <option value="kids-farm">Kids' Farm</option>
+                <option value="primates">Primates</option>
+                <option value="reptile-discovery-center">Reptile Discovery Center</option>
+                <option value="small-mammal-house">Small Mammal House</option>
+            </select>
 
-    <br>
-    <button onclick="sortByTime()">Sort By Time</button>
-    <button onclick="sortByExhibit()">Sort By Exhibit</button>
+            <br>
+            <button onclick="sortByTime()">Sort By Time</button>
+            <button onclick="sortByExhibit()">Sort By Exhibit</button>
 
-    <br>
-    <label for="arrival">Arrival Time:</label>
-    <input type="time" id="arrival" name="arrival" min="08:00" max="18:00" value="08:00" onchange="changeArrivalTime()">
-    <label for="departure">Departure Time:</label>
-    <input type="time" id="departure" name="departure" min="08:00" max="18:00" value="18:00" onchange="changeDepartureTime()">
+            <br>
+            <label for="arrival">Arrival Time:</label>
+            <input type="time" id="arrival" name="arrival" min="08:00" max="18:00" value="08:00"
+                onchange="changeArrivalTime()">
+            <label for="departure">Departure Time:</label>
+            <input type="time" id="departure" name="departure" min="08:00" max="18:00" value="18:00"
+                onchange="changeDepartureTime()">
 
-    <div id="demo-grid"></div>
+            <div id="demo-grid"></div>
+        </section>
+        <section id="animal-content">
+            <div id="animal-grid">
+                <div class="animal">Animal</div>
+                <div class="animal">Animal</div>
+                <div class="animal">Animal</div>
+                <div class="animal">Animal</div>
+                <div class="animal">Animal</div>
+                <div class="animal">Animal</div>
+                <div class="animal">Animal</div>
+                <div class="animal">Animal</div>
+                <div class="animal">Animal</div>
+                <div class="animal">Animal</div>
+                <div class="animal">Animal</div>
+
+            </div>
+        </section>
     </section>
-    
+
     <script src="jsonData.js"></script>
     <script src="main.js"></script>
 </body>
+
 </html>
