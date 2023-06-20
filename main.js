@@ -33,10 +33,30 @@ function fetchAnimals() {
                     imageList.push(animal.image_small);
                 }
             });
+            addAnimalsToPage(animalList, imageList);
         })
         .catch(error => {
             console.error("Error: ", error);
         })
+}
+
+function addAnimalsToPage(animalList, imageList) {
+    const animalGrid = document.getElementById("animal-grid");
+    for (let i = 0; i < animalList.length; i++) {
+        const animalLink = document.createElement("a");
+        animalLink.setAttribute("href", getAnimalUrl(animalList[i]));
+        animalLink.setAttribute("target", "_blank");
+        const divElement = document.createElement("div");
+        divElement.setAttribute("class", "animal");
+        divElement.appendChild(animalLink);
+        const animalImage = document.createElement("img");
+        animalImage.setAttribute("src", imageList[i]);
+        animalLink.appendChild(animalImage);
+        const animalTitle = document.createElement("p");
+        animalTitle.textContent = animalList[i];
+        animalLink.appendChild(animalTitle);
+        animalGrid.appendChild(divElement);
+    }
 }
 
 function addDemoToPage(demo) {
@@ -180,6 +200,11 @@ function transformExhibitString(exhibitString) {
 
 function transformAnimalString(animalString) {
     return animalString.toUpperCase().replaceAll("&amp;", "&").replaceAll("&#039;", "'");
+}
+
+function getAnimalUrl(animal) {
+    let url = "https://nationalzoo.si.edu/animals/" + animal.toLowerCase().replaceAll("'", "").replaceAll(" ", "-");
+    return url;
 }
 
 function getDemos() {
