@@ -56,7 +56,8 @@ h1, body {
     text-decoration-line: none;
 }
 
-.demo[data-exhibit="elephant-trails"]{
+.demo[data-exhibit="elephant-trails"],
+.animal[data-exhibit="elephant-trails"] {
     border: 3px solid rgb(53, 144, 243);
 }
 
@@ -65,12 +66,43 @@ h1, body {
     text-decoration-line: underline;
 }
 
+[data-exhibit="american-bison"] a {
+    color: rgb(79, 12, 99);
+    text-decoration-line: none;
+}
+
+.demo[data-exhibit="american-bison"],
+.animal[data-exhibit="american-bison"] {
+    border: 3px solid rgb(79, 12, 99);
+}
+
+[data-exhibit="american-bison"] a:hover {
+    color: rgb(52, 4, 67);
+    text-decoration-line: underline;
+}
+
+[data-exhibit="bird-house"] a {
+    color: rgb(91, 143, 110);
+    text-decoration-line: none;
+}
+
+.demo[data-exhibit="bird-house"],
+.animal[data-exhibit="bird-house"] {
+    border: 3px solid rgb(91, 143, 110);
+}
+
+[data-exhibit="bird-house"] a:hover {
+    color: rgb(62, 108, 79);
+    text-decoration-line: underline;
+}
+
 [data-exhibit="amazonia"] a {
     color: #F26419;
     text-decoration-line: none;
 }
 
-.demo[data-exhibit="amazonia"]{
+.demo[data-exhibit="amazonia"], 
+.animal[data-exhibit="amazonia"] {
     border: 3px solid #F26419;
 }
 
@@ -84,7 +116,8 @@ h1, body {
     text-decoration-line: none;
 }
 
-.demo[data-exhibit="small-mammal-house"]{
+.demo[data-exhibit="small-mammal-house"], 
+.animal[data-exhibit="small-mammal-house"] {
     border: 3px solid #87B37A;
 }
 
@@ -98,7 +131,8 @@ h1, body {
     text-decoration-line: none;
 }
 
-.demo[data-exhibit="africa-trail"]{
+.demo[data-exhibit="africa-trail"], 
+.animal[data-exhibit="africa-trail"] {
     border: 3px solid #2F4858;
 }
 
@@ -112,7 +146,8 @@ h1, body {
     text-decoration-line: none;
 }
 
-.demo[data-exhibit="primates"]{
+.demo[data-exhibit="primates"], 
+.animal[data-exhibit="primates"] {
     border: 3px solid #F6AE2D;
 }
 
@@ -126,7 +161,8 @@ h1, body {
     text-decoration-line: none;
 }
 
-.demo[data-exhibit="reptile-discovery-center"]{
+.demo[data-exhibit="reptile-discovery-center"], 
+.animal[data-exhibit="reptile-discovery-center"] {
     border: 3px solid #996606;
 }
 
@@ -140,7 +176,8 @@ h1, body {
     text-decoration-line: none;
 }
 
-.demo[data-exhibit="american-trail"]{
+.demo[data-exhibit="american-trail"], 
+.animal[data-exhibit="american-trail"] {
     border: 3px solid #06893C;
 }
 
@@ -154,7 +191,8 @@ h1, body {
     text-decoration-line: none;
 }
 
-.demo[data-exhibit="asia-trail"]{
+.demo[data-exhibit="asia-trail"], 
+.animal[data-exhibit="asia-trail"] {
     border: 3px solid #084C61;
 }
 
@@ -168,7 +206,8 @@ h1, body {
     text-decoration-line: none;
 }
 
-.demo[data-exhibit="great-cats"]{
+.demo[data-exhibit="great-cats"],
+.animal[data-exhibit="great-cats"] {
     border: 3px solid #F7ACCF;
 }
 
@@ -182,7 +221,8 @@ h1, body {
     text-decoration-line: none;
 }
 
-.demo[data-exhibit="kids-farm"]{
+.demo[data-exhibit="kids-farm"], 
+.animal[data-exhibit="kids-farm"] {
     border: 3px solid #C62606;
 }
 
@@ -196,7 +236,8 @@ h1, body {
     text-decoration-line: none;
 }
 
-.demo[data-exhibit="claws-paws-pathway"]{
+.demo[data-exhibit="claws-paws-pathway"],
+.animal[data-exhibit="claws-paws-pathway"] {
     border: 3px solid #4CB5AE;
 }
 

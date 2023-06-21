@@ -7,9 +7,11 @@ let keepDepart;
 fetchDemos();
 fetchAnimals();
 
-// Get demo data from jsonData.json
+/**
+ * Get demo data from demoData.json
+ */
 function fetchDemos() {
-    fetch("jsonData.json")
+    fetch("demoData.json")
         .then(response => response.json())
         .then(data => {
             data.forEach(demo => addDemoToPage(demo));
@@ -21,27 +23,59 @@ function fetchDemos() {
         });
 }
 
-// Get animal data from  animaldata.json
+/**
+ * Get animal data from animalData.json
+ */
 function fetchAnimals() {
     let animalList = new Array();
     let exhibitList = new Array();
     let imageList = new Array();
 
-    fetch("animaldata.json")
+    fetch("animalData.json")
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(animal => {
+                if (animal.title && animal.exhibit_name) {
+                    animalList.push(transformAnimalString(animal.title));
+                    exhibitList.push(transformExhibitString(animal.exhibit_name));
+                }
+            });
+            fetchImages(animalList) // Call fetchImages and handle the resolved imageList
+                .then(resolvedImageList => {
+                    imageList = resolvedImageList;
+                    addAnimalsToPage(animalList, imageList, exhibitList);
+                })
+                .catch(error => {
+                    console.error("Error: ", error);
+                });
+        })
+        .catch(error => {
+            console.error("Error: ", error);
+        })
+}
+
+/**
+ * Get animal image data from imageData.json
+ */
+function fetchImages(animalList) {
+    let imageList = new Array(animalList.length);
+
+    return fetch("imageData.json")
         .then(response => response.json())
         .then(data => {
             const dataArray = Object.values(data);
             dataArray.forEach(animal => {
-                if (Array.isArray(animal.exhibit_name) && animal.exhibit_name.length > 0) {
-                    animalList.push(transformAnimalString(animal.title));
-                    exhibitList.push(transformExhibitString(animal.exhibit_name[0]));
-                    imageList.push(animal.image_small);
+                if (animalList.includes(transformAnimalString(animal.title))) {
+                    let index = animalList.indexOf(transformAnimalString(animal.title));
+                    imageList[index] = animal.image_small;
+                    let indexDuplicate = animalList.indexOf(transformAnimalString(animal.title), index + 1);
+                    if (indexDuplicate) imageList[indexDuplicate] = animal.image_small;
                 }
             });
-            addAnimalsToPage(animalList, imageList, exhibitList);
+            return imageList;
         })
         .catch(error => {
-            console.error("Error: ", error);
+            console.error("Error: ", error)
         })
 }
 
@@ -53,7 +87,7 @@ function fetchAnimals() {
  */
 function addAnimalsToPage(animalList, imageList, exhibitList) {
     const animalGrid = document.getElementById("animal-grid");
-    
+
     for (let i = 0; i < animalList.length; i++) {
         const divElement = document.createElement("div");
         divElement.setAttribute("class", "animal");
@@ -66,6 +100,7 @@ function addAnimalsToPage(animalList, imageList, exhibitList) {
 
         const animalImage = document.createElement("img");
         animalImage.setAttribute("src", imageList[i]);
+        console.log(imageList[i]);
         animalLink.appendChild(animalImage);
 
         const animalTitle = document.createElement("p");
@@ -81,7 +116,6 @@ function addAnimalsToPage(animalList, imageList, exhibitList) {
  * @param {Object} demo Object representing a scheduled demo
  */
 function addDemoToPage(demo) {
-    console.log(demo);
     const divElement = createDiv(demo);
     const timeParagraph = createTimeParagraph(demo);
     const exhibitParagraph = createExhibitParagraph(demo);
@@ -140,7 +174,7 @@ function changeExhibit() {
         let keepDemo = keepArrive[i] && keepDepart[i] && keepExhibit[i];
         allDemos[i].style.display = keepDemo ? "table-row" : "none";
     }
-    
+
     for (let i = 0; i < allAnimals.length; i++) {
         let keepAnimal = allAnimals[i].getAttribute("data-exhibit") == exhibitSelected || exhibitSelected == "all";
         allAnimals[i].style.display = keepAnimal ? "grid" : "none";
