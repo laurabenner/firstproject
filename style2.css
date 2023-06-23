@@ -1,0 +1,105 @@
+#animal-grid {
+    display: none;
+}
+
+#demo-grid {
+    grid-area: demos;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+}
+
+.demo {
+    background-color: #FBF7EF;
+    border: 5px solid #FBF7EF;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px auto;
+    width: 50%;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-areas: "time exhibit" "time description";
+}
+
+#filters {
+    text-align: center;
+}
+
+[data-exhibit] a {
+    text-decoration-line: none;
+}
+
+[data-exhibit] a:hover {
+    text-decoration-line: underline;
+}
+
+[data-exhibit="elephant-trails"] a {
+    color: rgb(53, 144, 243);
+}
+
+[data-exhibit="american-bison"] a {
+    color: rgb(79, 12, 99);
+}
+
+[data-exhibit="bird-house"] a {
+    color: rgb(91, 143, 110);
+}
+
+[data-exhibit="amazonia"] a {
+    color: #F26419;
+}
+
+[data-exhibit="small-mammal-house"] a {
+    color: #87B37A;
+}
+
+[data-exhibit="africa-trail"] a {
+    color: #2F4858;
+}
+
+[data-exhibit="primates"] a {
+    color: #F6AE2D;
+}
+
+[data-exhibit="reptile-discovery-center"] a {
+    color: #987175;
+}
+
+[data-exhibit="american-trail"] a {
+    color: #06893C;
+}
+
+[data-exhibit="asia-trail"] a {
+    color: #084C61;
+}
+
+[data-exhibit="great-cats"] a {
+    color: #F7ACCF;
+}
+
+[data-exhibit="kids-farm"] a {
+    color: #C62606;
+}
+
+[data-exhibit="claws-paws-pathway"] a {
+    color: #4CB5AE;
+}
+
+.demo .time {
+    grid-area: time;
+}
+
+.demo .exhibit {
+    grid-area: exhibit;
+}
+
+.demo .description {
+    grid-area: description;
+}
+
+p {
+    display: inline;
+}
+

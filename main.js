@@ -17,6 +17,7 @@ function fetchDemos() {
             data.forEach(demo => addDemoToPage(demo));
             sortByTime();
             initializeKeeps();
+            eventHandlers();
         })
         .catch(error => {
             console.error("Error:", error);
@@ -100,7 +101,6 @@ function addAnimalsToPage(animalList, imageList, exhibitList) {
 
         const animalImage = document.createElement("img");
         animalImage.setAttribute("src", imageList[i]);
-        console.log(imageList[i]);
         animalLink.appendChild(animalImage);
 
         const animalTitle = document.createElement("p");
@@ -117,14 +117,14 @@ function addAnimalsToPage(animalList, imageList, exhibitList) {
  */
 function addDemoToPage(demo) {
     const divElement = createDiv(demo);
-    const timeParagraph = createTimeParagraph(demo);
-    const exhibitParagraph = createExhibitParagraph(demo);
-    const descriptionParagraph = createDescriptionParagraph(demo);
+    const timeContainer = createTimeContainer(demo);
+    const exhibitContainer = createExhibitContainer(demo);
+    const descriptionContainer = createDescriptionContainer(demo);
     const container = document.getElementById("demo-grid");
 
-    divElement.appendChild(timeParagraph);
-    divElement.appendChild(exhibitParagraph);
-    divElement.appendChild(descriptionParagraph);
+    divElement.appendChild(timeContainer);
+    divElement.appendChild(exhibitContainer);
+    divElement.appendChild(descriptionContainer);
     container.appendChild(divElement);
 }
 
@@ -172,7 +172,7 @@ function changeExhibit() {
     for (let i = 0; i < allDemos.length; i++) {
         keepExhibit[i] = allDemos[i].getAttribute("data-exhibit") == exhibitSelected || exhibitSelected == "all";
         let keepDemo = keepArrive[i] && keepDepart[i] && keepExhibit[i];
-        allDemos[i].style.display = keepDemo ? "table-row" : "none";
+        allDemos[i].style.display = keepDemo ? "grid" : "none";
     }
 
     for (let i = 0; i < allAnimals.length; i++) {
@@ -180,7 +180,7 @@ function changeExhibit() {
         allAnimals[i].style.display = keepAnimal ? "grid" : "none";
     }
 
-    changePicture(exhibitSelected);
+    //changePicture(exhibitSelected);
 }
 
 /**
@@ -225,6 +225,28 @@ function sortByExhibit() {
 }
 
 /**
+ * Add event handlers
+ */
+function eventHandlers() {
+    let allDemos = Array.from(getDemos());
+
+    allDemos.forEach(demo => {
+        demo.addEventListener("click", () => {
+            expandDemo(demo);
+        });
+    })
+}
+
+/**
+ * Expand info when a demo is clicked
+ */
+function expandDemo(demo) {
+    let expanded = (demo.getAttribute("data-expand") === "true");
+    demo.setAttribute("data-expand", !expanded);
+    demo.style.height = expanded ? "initial" : "200px";
+}
+
+/**
  * Create div element for demo
  * @param {Object} demo Object representing a scheduled demo
  * @returns div element
@@ -232,6 +254,7 @@ function sortByExhibit() {
 function createDiv(demo) {
     const divElement = document.createElement("div");
     divElement.setAttribute("class", "demo");
+    divElement.setAttribute("data-expand", "false");
     divElement.setAttribute("data-time", transformTimeString(demo.Time));
     divElement.setAttribute("data-exhibit", transformExhibitString(demo.Exhibit));
     return divElement;
@@ -242,11 +265,13 @@ function createDiv(demo) {
  * @param {Object} demo Object representing a scheduled demo
  * @returns p element
  */
-function createTimeParagraph(demo) {
+function createTimeContainer(demo) {
+    const timeContainer = document.createElement("div");
+    timeContainer.setAttribute("class", "time");
     const timeParagraph = document.createElement("p");
-    timeParagraph.setAttribute("class", "time");
     timeParagraph.textContent = demo.Time;
-    return timeParagraph;
+    timeContainer.appendChild(timeParagraph);
+    return timeContainer;
 }
 
 /**
@@ -254,18 +279,20 @@ function createTimeParagraph(demo) {
  * @param {Object} demo Object representing a scheduled demo
  * @returns p element
  */
-function createExhibitParagraph(demo) {
+function createExhibitContainer(demo) {
+    const exhibitContainer = document.createElement("div");
+    exhibitContainer.setAttribute("class", "exhibit");
     const exhibitParagraph = document.createElement("p");
-    exhibitParagraph.setAttribute("class", "exhibit");
     const exhibitLink = document.createElement("a");
     exhibitLink.setAttribute(
         "href",
-        "https://nationalzoo.si.edu/animals/exhibits/" + transformExhibitString(demo.Exhibit)
+        "https://nationalzoo.si.edu/animals/exhibits/" + transformExhibitString(demo.Exhibit).replace("africa-trail", "cheetah-conservation-station")
     );
     exhibitLink.setAttribute("target", "_blank");
     exhibitLink.textContent = demo.Exhibit.toUpperCase();
     exhibitParagraph.appendChild(exhibitLink);
-    return exhibitParagraph;
+    exhibitContainer.appendChild(exhibitParagraph);
+    return exhibitContainer;
 }
 
 /**
@@ -273,11 +300,13 @@ function createExhibitParagraph(demo) {
  * @param {Object} demo Object representing a scheduled demo
  * @returns p element
  */
-function createDescriptionParagraph(demo) {
+function createDescriptionContainer(demo) {
+    const descriptionContainer = document.createElement("div");
+    descriptionContainer.setAttribute("class", "description");
     const descriptionParagraph = document.createElement("p");
-    descriptionParagraph.setAttribute("class", "description");
     descriptionParagraph.textContent = demo.Demo;
-    return descriptionParagraph;
+    descriptionContainer.appendChild(descriptionParagraph);
+    return descriptionContainer;
 }
 
 /**
@@ -305,7 +334,7 @@ function transformTimeString(timeString) {
  * @returns Transformed string
  */
 function transformExhibitString(exhibitString) {
-    return exhibitString.toLowerCase().replaceAll(" &amp; ", "-").replaceAll("&#039;", "").replaceAll(" & ", "-").replaceAll(" ", "-").replaceAll("'", "");
+    return exhibitString.toLowerCase().replaceAll(" (outdoor viewing)", "").replaceAll(" &amp; ", "-").replaceAll("&#039;", "").replaceAll(" & ", "-").replaceAll(" ", "-").replaceAll("'", "");
 }
 
 /**
