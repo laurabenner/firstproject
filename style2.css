@@ -7,8 +7,23 @@
     padding: 20px;
 }
 
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+h1 {
+    margin: 0;
+    color: white;
+}
+
 header {
     text-align: center;
+    background-image: url(images/bird.jpg);
+    background-size: cover;
+    margin: 0 0 20px;
+    padding: 100px 0 40px;
 }
 
 .demo {
@@ -19,8 +34,8 @@ header {
     margin: 10px auto;
     width: 50%;
     display: grid;
-    grid-template-columns: 1fr 4fr;
-    grid-template-areas: "time exhibit" "time description";
+    grid-template-columns: 5fr 19fr 1fr;
+    grid-template-areas: "time exhibit collapse" "time description ." "time swiper .";
 }
 
 #filters {
@@ -103,3 +118,64 @@ p {
     display: inline;
 }
 
+.swiper-container {
+    grid-area: swiper;
+    margin-top: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.swiper-slide {
+    text-align: center;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.animal-image {
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 50%;
+}
+
+.swiper-button-prev {
+    left: 5px;
+    background-image: url('https://unpkg.com/swiper/swiper-bundle.min.css');
+}
+
+.swiper-button-next {
+    right: 5px;
+    background-image: url('https://unpkg.com/swiper/swiper-bundle.min.css');
+}
+
+.collapsible {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    display: flex;
+    justify-content: right;
+    text-align: right;
+    align-items: right;
+    font-size: 16px;
+    color: black;
+    grid-area: collapse;
+    content: "+";
+}
+
+.collapsible::before {
+    content: "+";
+}
+
+.collapsible.collapsed::before {
+    content: "-";
+}
+
+.animal-label {
+    display: block;
+    margin-bottom: 10px;
+}

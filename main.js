@@ -3,6 +3,11 @@ let keepExhibit;
 let keepArrive;
 let keepDepart;
 
+// Declare global animal arrays to be used in functions
+let animalList = new Array();
+let exhibitList = new Array();
+let imageList = new Array();
+
 // Get demo and animal data
 fetchDemos();
 fetchAnimals();
@@ -28,10 +33,6 @@ function fetchDemos() {
  * Get animal data from animalData.json
  */
 function fetchAnimals() {
-    let animalList = new Array();
-    let exhibitList = new Array();
-    let imageList = new Array();
-
     fetch("animalData.json")
         .then(response => response.json())
         .then(data => {
@@ -44,7 +45,6 @@ function fetchAnimals() {
             fetchImages(animalList) // Call fetchImages and handle the resolved imageList
                 .then(resolvedImageList => {
                     imageList = resolvedImageList;
-                    addAnimalsToPage(animalList, imageList, exhibitList);
                 })
                 .catch(error => {
                     console.error("Error: ", error);
@@ -120,10 +120,12 @@ function addDemoToPage(demo) {
     const timeContainer = createTimeContainer(demo);
     const exhibitContainer = createExhibitContainer(demo);
     const descriptionContainer = createDescriptionContainer(demo);
+    const collapsible = createCollapsible();
     const container = document.getElementById("demo-grid");
 
     divElement.appendChild(timeContainer);
     divElement.appendChild(exhibitContainer);
+    divElement.appendChild(collapsible);
     divElement.appendChild(descriptionContainer);
     container.appendChild(divElement);
 }
@@ -229,12 +231,13 @@ function sortByExhibit() {
  */
 function eventHandlers() {
     let allDemos = Array.from(getDemos());
+    let allCollapsibles = Array.from(document.getElementsByClassName("collapsible"));
 
-    allDemos.forEach(demo => {
-        demo.addEventListener("click", () => {
-            expandDemo(demo);
-        });
-    })
+    for (let i = 0; i < allDemos.length; i++) {
+        allCollapsibles[i].addEventListener("click", () => {
+            expandDemo(allDemos[i]);
+        })
+    }
 }
 
 /**
@@ -243,7 +246,68 @@ function eventHandlers() {
 function expandDemo(demo) {
     let expanded = (demo.getAttribute("data-expand") === "true");
     demo.setAttribute("data-expand", !expanded);
-    demo.style.height = expanded ? "initial" : "200px";
+
+    if (expanded == false) {
+        let collapsibles = Array.from(document.getElementsByClassName("collapsible"));
+        collapsibles.forEach(collapsible => { collapsible.setAttribute("class", "collapsible") })
+        let containers = Array.from(document.getElementsByClassName("swiper-container"));
+        containers.forEach(container => { container.remove() });
+
+        let exhibit = demo.getAttribute("data-exhibit");
+        let animals = animalList.slice();
+        let images = imageList.slice();
+
+        animals = animals.filter(animal => { return exhibitList[animals.indexOf(animal)] == exhibit; })
+        images = images.filter(image => { return exhibitList[images.indexOf(image)] == exhibit; })
+
+        let label = document.createElement("p");
+        label.setAttribute("class", "animal-label");
+        label.textContent = "Animals in this exhibit: ";
+
+        let container = document.createElement("div");
+        container.setAttribute("class", "swiper-container");
+
+        let wrapper = document.createElement("div");
+        wrapper.setAttribute("class", "swiper-wrapper");
+        for (let i = 0; i < animals.length; i++) {
+            let slide = document.createElement("div");
+            slide.setAttribute("class", "swiper-slide");
+            let image = document.createElement("img");
+            image.setAttribute("class", "animal-image");
+            image.setAttribute("src", images[i]);
+            image.setAttribute("alt", animals[i]);
+            slide.appendChild(image);
+            wrapper.appendChild(slide);
+        }
+
+        let buttonPrev = document.createElement("div");
+        buttonPrev.setAttribute("class", "swiper-button-prev");
+        let buttonNext = document.createElement("div");
+        buttonNext.setAttribute("class", "swiper-button-next");
+
+        container.appendChild(label);
+        container.appendChild(wrapper);
+        container.appendChild(buttonPrev);
+        container.appendChild(buttonNext);
+        demo.appendChild(container);
+
+        let collapsible = demo.querySelector("button");
+        collapsible.setAttribute("class", "collapsible collapsed");
+
+        let swiper = new Swiper('.swiper-container', {
+            slidesPerView: 8,
+            spaceBetween: 5,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    } else {
+        let collapsibles = Array.from(document.getElementsByClassName("collapsible"));
+        collapsibles.forEach(collapsible => { collapsible.setAttribute("class", "collapsible") })
+        let containers = Array.from(document.getElementsByClassName("swiper-container"));
+        containers.forEach(container => { container.remove() });
+    }
 }
 
 /**
@@ -307,6 +371,12 @@ function createDescriptionContainer(demo) {
     descriptionParagraph.textContent = demo.Demo;
     descriptionContainer.appendChild(descriptionParagraph);
     return descriptionContainer;
+}
+
+function createCollapsible() {
+    const collapsible = document.createElement("button");
+    collapsible.setAttribute("class", "collapsible");
+    return collapsible;
 }
 
 /**
