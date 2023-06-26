@@ -22,7 +22,7 @@ function fetchDemos() {
             data.forEach(demo => addDemoToPage(demo));
             sortByTime();
             initializeKeeps();
-            eventHandlers();
+            addCollapsibleEventHandlers();
         })
         .catch(error => {
             console.error("Error:", error);
@@ -81,37 +81,6 @@ function fetchImages(animalList) {
 }
 
 /**
- * Add animals to page
- * @param animalList Array of animal names
- * @param imageList Array of animal image links
- * @param exhibitList Array of animal exhibit names
- */
-function addAnimalsToPage(animalList, imageList, exhibitList) {
-    const animalGrid = document.getElementById("animal-grid");
-
-    for (let i = 0; i < animalList.length; i++) {
-        const divElement = document.createElement("div");
-        divElement.setAttribute("class", "animal");
-        divElement.setAttribute("data-exhibit", exhibitList[i])
-
-        const animalLink = document.createElement("a");
-        animalLink.setAttribute("href", getAnimalUrl(animalList[i]));
-        animalLink.setAttribute("target", "_blank");
-        divElement.appendChild(animalLink);
-
-        const animalImage = document.createElement("img");
-        animalImage.setAttribute("src", imageList[i]);
-        animalLink.appendChild(animalImage);
-
-        const animalTitle = document.createElement("p");
-        animalTitle.textContent = animalList[i];
-        animalLink.appendChild(animalTitle);
-
-        animalGrid.appendChild(divElement);
-    }
-}
-
-/**
  * Add demos to page
  * @param {Object} demo Object representing a scheduled demo
  */
@@ -142,7 +111,7 @@ function changeArrivalTime() {
         let time = allDemos[i].getAttribute("data-time");
         keepArrive[i] = arrivalTime <= time;
         let keep = keepArrive[i] && keepDepart[i] && keepExhibit[i];
-        allDemos[i].style.display = keep ? "table-row" : "none";
+        allDemos[i].style.display = keep ? "grid" : "none";
     }
 }
 
@@ -158,7 +127,7 @@ function changeDepartureTime() {
         let time = allDemos[i].getAttribute("data-time");
         keepDepart[i] = departureTime > time;
         let keep = keepArrive[i] && keepDepart[i] && keepExhibit[i];
-        allDemos[i].style.display = keep ? "table-row" : "none";
+        allDemos[i].style.display = keep ? "grid" : "none";
     }
 }
 
@@ -229,7 +198,7 @@ function sortByExhibit() {
 /**
  * Add event handlers
  */
-function eventHandlers() {
+function addCollapsibleEventHandlers() {
     let allDemos = Array.from(getDemos());
     let allCollapsibles = Array.from(document.getElementsByClassName("collapsible"));
 
@@ -240,73 +209,35 @@ function eventHandlers() {
     }
 }
 
+function addAnimalEventHandler(slide, animal) {
+    let animalLink = document.querySelector(".animal-link");
+    slide.addEventListener("mouseover", () => {
+        animalLink.textContent = animal;
+    })
+    slide.addEventListener("mouseout", () => {
+        animalLink.textContent = "";
+    })
+    slide.addEventListener("click", () => {
+        window.open(getAnimalUrl(animal), "_blank");
+    })
+}
+
 /**
- * Expand info when a demo is clicked
+ * Expands demo info
+ * @param {*} demo Demo div element
  */
 function expandDemo(demo) {
     let expanded = (demo.getAttribute("data-expand") === "true");
-    demo.setAttribute("data-expand", !expanded);
+    closeExpandedDemos();
 
     if (expanded == false) {
-        let collapsibles = Array.from(document.getElementsByClassName("collapsible"));
-        collapsibles.forEach(collapsible => { collapsible.setAttribute("class", "collapsible") })
-        let containers = Array.from(document.getElementsByClassName("swiper-container"));
-        containers.forEach(container => { container.remove() });
+        demo.setAttribute("data-expand", "true");
 
-        let exhibit = demo.getAttribute("data-exhibit");
-        let animals = animalList.slice();
-        let images = imageList.slice();
-
-        animals = animals.filter(animal => { return exhibitList[animals.indexOf(animal)] == exhibit; })
-        images = images.filter(image => { return exhibitList[images.indexOf(image)] == exhibit; })
-
-        let label = document.createElement("p");
-        label.setAttribute("class", "animal-label");
-        label.textContent = "Animals in this exhibit: ";
-
-        let container = document.createElement("div");
-        container.setAttribute("class", "swiper-container");
-
-        let wrapper = document.createElement("div");
-        wrapper.setAttribute("class", "swiper-wrapper");
-        for (let i = 0; i < animals.length; i++) {
-            let slide = document.createElement("div");
-            slide.setAttribute("class", "swiper-slide");
-            let image = document.createElement("img");
-            image.setAttribute("class", "animal-image");
-            image.setAttribute("src", images[i]);
-            image.setAttribute("alt", animals[i]);
-            slide.appendChild(image);
-            wrapper.appendChild(slide);
-        }
-
-        let buttonPrev = document.createElement("div");
-        buttonPrev.setAttribute("class", "swiper-button-prev");
-        let buttonNext = document.createElement("div");
-        buttonNext.setAttribute("class", "swiper-button-next");
-
-        container.appendChild(label);
-        container.appendChild(wrapper);
-        container.appendChild(buttonPrev);
-        container.appendChild(buttonNext);
-        demo.appendChild(container);
+        createSwiper(demo);
 
         let collapsible = demo.querySelector("button");
         collapsible.setAttribute("class", "collapsible collapsed");
-
-        let swiper = new Swiper('.swiper-container', {
-            slidesPerView: 8,
-            spaceBetween: 5,
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        });
-    } else {
-        let collapsibles = Array.from(document.getElementsByClassName("collapsible"));
-        collapsibles.forEach(collapsible => { collapsible.setAttribute("class", "collapsible") })
-        let containers = Array.from(document.getElementsByClassName("swiper-container"));
-        containers.forEach(container => { container.remove() });
+        demo.style.height = "300px";
     }
 }
 
@@ -477,4 +408,89 @@ function changePicture(exhibitSelected) {
     let url = "url('images/" + exhibitSelected + ".jpg')";
     document.body.style.backgroundImage = url;
     document.body.style.backgroundRepeat = "no-repeat";
+}
+
+/**
+ * Closes all expanded demos
+ */
+function closeExpandedDemos() {
+    let allDemos = Array.from(getDemos());
+    allDemos.forEach(eachDemo => {
+        eachDemo.setAttribute("data-expand", "false");
+        eachDemo.style.height = "50px";
+    });
+    let collapsibles = Array.from(document.getElementsByClassName("collapsible"));
+    collapsibles.forEach(collapsible => { collapsible.setAttribute("class", "collapsible") })
+    let containers = Array.from(document.getElementsByClassName("swiper-container"));
+    containers.forEach(container => { container.remove() });
+}
+
+/**
+ * Creates a Swiper slideshow of all animals in the demo's exhibit
+ * @param {*} demo Demo div element
+ */
+function createSwiper(demo) {
+    let exhibit = demo.getAttribute("data-exhibit");
+    let animals = animalList.slice();
+    let images = imageList.slice();
+
+    animals = animals.filter(animal => { return exhibitList[animals.indexOf(animal)] == exhibit; })
+    images = images.filter(image => { return exhibitList[images.indexOf(image)] == exhibit; })
+
+    let label = document.createElement("p");
+    label.setAttribute("class", "animal-label");
+    label.textContent = "Animals in this exhibit: ";
+
+    let container = document.createElement("div");
+    container.setAttribute("class", "swiper-container");
+
+    let wrapper = document.createElement("div");
+    wrapper.setAttribute("class", "swiper-wrapper");
+    for (let i = 0; i < animals.length; i++) {
+        let slide = document.createElement("div");
+        slide.setAttribute("class", "swiper-slide");
+        let image = document.createElement("img");
+        image.setAttribute("class", "animal-image");
+        image.setAttribute("src", images[i]);
+        image.setAttribute("alt", animals[i]);
+        slide.appendChild(image);
+        wrapper.appendChild(slide);
+    }
+
+    let buttonPrev = document.createElement("div");
+    buttonPrev.setAttribute("class", "swiper-button-prev");
+    let buttonNext = document.createElement("div");
+    buttonNext.setAttribute("class", "swiper-button-next");
+
+    let animalDiv = document.createElement("div");
+    animalDiv.setAttribute("class", "animal-div");
+    let paragraph = document.createElement("p");
+    paragraph.textContent = "Animal selected: ";
+    let animalText = document.createElement("p");
+    animalText.setAttribute("data-exhibit", exhibit);
+    let animalLink = document.createElement("a");
+    animalLink.setAttribute("class", "animal-link");
+    animalText.appendChild(animalLink);
+    animalDiv.appendChild(paragraph);
+    animalDiv.appendChild(animalText);
+
+    container.appendChild(label);
+    container.appendChild(wrapper);
+    container.appendChild(buttonPrev);
+    container.appendChild(buttonNext);
+    container.appendChild(animalDiv);
+    demo.appendChild(container);
+
+    let swiper = new Swiper('.swiper-container', {
+        slidesPerView: 6,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+
+    let slides = demo.querySelectorAll('.swiper-slide');
+    animals.forEach(function (animal, index) {
+        addAnimalEventHandler(slides[index], animal);
+    });
 }

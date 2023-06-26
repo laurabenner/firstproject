@@ -11,6 +11,7 @@ html,
 body {
     height: 100%;
     margin: 0;
+    font-family: 'Open Sans', sans-serif;
 }
 
 h1 {
@@ -32,10 +33,12 @@ header {
     border-radius: 5px;
     padding: 10px;
     margin: 10px auto;
-    width: 50%;
+    height: 50px;
+    width: 66%;
     display: grid;
-    grid-template-columns: 5fr 19fr 1fr;
-    grid-template-areas: "time exhibit collapse" "time description ." "time swiper .";
+    grid-template-columns: 3fr 21fr 1fr;
+    grid-template-areas: "time exhibit collapse" "time description ." "time swiper ." "time animal .";
+    transition: height 0.3s ease;
 }
 
 #filters {
@@ -125,28 +128,64 @@ p {
     position: relative;
 }
 
+.swiper-wrapper {
+    height: 100px !important;
+}
+
 .swiper-slide {
     text-align: center;
     background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 10px;
+    min-height: 100px;
 }
 
 .animal-image {
-    max-width: 50px;
-    max-height: 50px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
+    box-shadow: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.swiper-slide:hover .animal-image {
+    box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.5);
+}
+
+.animal-div {
+    grid-area: animal;
+    margin-top: 20px;
+}
+
+.swiper-slide a {
+    display: inline-block;
+    z-index: 100;
 }
 
 .swiper-button-prev {
-    left: 5px;
-    background-image: url('https://unpkg.com/swiper/swiper-bundle.min.css');
+    transform: translateY(40%);
+    left: 0 !important;
 }
 
 .swiper-button-next {
+    transform: translateY(40%);
+    right: 0 !important;
+}
+
+.swiper-button-prev::after {
+    left: 5px;
+    color: black;
+}
+
+.swiper-button-next::after {
     right: 5px;
-    background-image: url('https://unpkg.com/swiper/swiper-bundle.min.css');
+    color: black;
+}
+
+:root {
+    --swiper-navigation-size: 20px !important;
 }
 
 .collapsible {
